@@ -1,10 +1,12 @@
 import os
 import cv2
+import csv
 import time
 import argparse
 import multiprocessing
 import numpy as np
 import tensorflow as tf
+import file_writer
 
 from utils.app_utils import FPS, WebcamVideoStream, HLSVideoStream
 from multiprocessing import Queue, Pool
@@ -61,8 +63,8 @@ def detect_objects(image_np, sess, detection_graph, fps):
         category_index,
         use_normalized_coordinates=True,
         line_thickness=8)
-        
-    print (the_result)
+
+
     return image_np
 
 
