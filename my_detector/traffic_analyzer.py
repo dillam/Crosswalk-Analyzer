@@ -6,8 +6,8 @@ import argparse
 import multiprocessing
 import numpy as np
 import tensorflow as tf
-import file_writer
 
+from file_writer import parse_result
 from utils.app_utils import FPS, WebcamVideoStream, HLSVideoStream
 from multiprocessing import Queue, Pool
 from object_detection.utils import label_map_util
@@ -65,6 +65,14 @@ def detect_objects(image_np, sess, detection_graph, fps):
         line_thickness=8)
 
 
+    with open('traffic_results.csv', 'a') as csv_file:
+        writer = csv.writer(csv_file)
+        csv_line = parse_result(the_result)
+        writer.writerow(csv_line)
+        print ("wrote row: %s" % (csv_line))
+
+    csv_file.close()
+
     return image_np
 
 
@@ -87,6 +95,7 @@ def worker(input_q, output_q):
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         output_q.put(detect_objects(frame_rgb, sess, detection_graph, fps))
 
+    print("does this execute")
     fps.stop()
     sess.close()
 
@@ -126,6 +135,8 @@ if __name__ == '__main__':
 
     fps = FPS().start()
 
+    current_time = time.time()
+
     while True:  # fps._numFrames < 120
         frame = video_capture.read()
         input_q.put(frame)
@@ -142,6 +153,7 @@ if __name__ == '__main__':
             break
 
     fps.stop()
+    print("csv closed")
     print('[INFO] elapsed time (total): {:.2f}'.format(fps.elapsed()))
     print('[INFO] approx. FPS: {:.2f}'.format(fps.fps()))
 
