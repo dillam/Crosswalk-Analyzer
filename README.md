@@ -3,7 +3,9 @@
 This project uses the [Tensorflow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection)
  to monitor vehicle and pedestrian traffic in a roadway. 
  
- Using a webcam, this tool will count the number of pedestrians and vehicles that are within the frame of the camera at a given time. The number of pedestrians and vehicles will then be stored in a csv file titled `traffic_results.csv` along with a timestamp of when the counts occured. The tool runs in realtime, the number of frames per second depend on your computer hardware. 
+Using a webcam, this tool will count the number of pedestrians and vehicles that are within the frame of the camera at a given time. The number of pedestrians and vehicles will then be stored in a csv file titled `traffic_results.csv` along with a timestamp of when the counts occured. The tool runs in realtime, the number of frames per second depend on your computer hardware. 
+ 
+The research paper behind this system is found in the repo.
 
 ## Installation
 
